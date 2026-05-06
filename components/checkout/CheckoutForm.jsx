@@ -127,8 +127,6 @@ export default function CheckoutForm({
   const { cartDBGuest, totalDBGuest, authToken, isAuthenticated, guestToken } =
     useApp();
 
-  console.log(couponMeta);
-
   const normalizedCartItems = cartDBGuest.map((item) => ({
     id: item.cart_id,
     productVariantId: item.product_variant_id,

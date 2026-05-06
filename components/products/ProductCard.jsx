@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, ShoppingCart, Eye } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
 import { useApp } from "@/components/context/AppContext";
 
@@ -53,15 +53,16 @@ export default function ProductCard({ p }) {
 
   return (
     <section className="relative h-full flex flex-col">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-        className="group flex flex-col bg-white dark:bg-[#0a0f2e] rounded overflow-hidden h-full cursor-pointer dark:border-[#1c2444]"
-      >
+      <Link href={`/product/${p?.slug}`} className="h-full">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+          className="group flex flex-col dark:bg-[#0a0f2e] rounded overflow-hidden h-full cursor-pointer dark:border-[#1c2444]"
+        >
         {/* Image Container */}
         <div className="relative h-64 w-full overflow-hidden bg-gray-50 dark:bg-brand-navy/50">
           <Image
@@ -88,17 +89,6 @@ export default function ProductCard({ p }) {
               <Heart size={16} fill={isFavorite ? "currentColor" : "none"} />
             </motion.button>
 
-            <Link href={`/product/${p?.slug}`}>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="cursor-pointer p-2 rounded-full text-white transition-colors"
-                style={{ backgroundColor: "#050a30" }}
-              >
-                <Eye size={16} />
-              </motion.button>
-            </Link>
-
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
@@ -114,14 +104,9 @@ export default function ProductCard({ p }) {
             </motion.button>
           </motion.div>
 
-          {/* Category Badge */}
-          <div className="absolute top-3 left-3 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-sm text-brand-navy shadow-sm text-[10px] font-bold uppercase tracking-wider z-10 dark:bg-[#050a30]/95 dark:text-brand-pale">
-            {p?.main_category?.name || "Category"}
-          </div>
-
           {/* Discount Badge */}
           {discountAmount && (
-            <div className="absolute top-3 right-3 rounded-full bg-red-500 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white shadow-md z-10">
+            <div className="absolute top-3 left-3 rounded-full bg-red-500 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white shadow-md z-10">
               -{discountAmount}
             </div>
           )}
@@ -134,7 +119,11 @@ export default function ProductCard({ p }) {
               {p?.variants?.map((variant, index) => (
                 <motion.button
                   key={variant?.product_variant_id || index}
-                  onClick={() => setSelectedVariant(variant)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setSelectedVariant(variant);
+                  }}
                   className={`relative cursor-pointer overflow-hidden ring-2 transition-all ${
                     selectedVariant?.product_variant_id === variant?.product_variant_id
                       ? "ring-brand-gold"
@@ -153,7 +142,10 @@ export default function ProductCard({ p }) {
             </div>
           )}
           <div className="flex-grow">
-            <h3 className="font-bold text-slate-900 dark:text-[#e8d9c4] text-[15px] leading-snug mb-3 line-clamp-2">
+            <p className="text-brand-gold">
+              {p?.main_category?.name || "Category"}
+            </p>
+            <h3 className="text-slate-900 dark:text-[#e8d9c4] text-xl leading-snug line-clamp-2 mt-2 mb-1">
               {p?.name}
               {" "}
               {selectedVariant?.variant_name && (
@@ -164,10 +156,10 @@ export default function ProductCard({ p }) {
             </h3>
 
             {/* Price */}
-            <div className="mb-4 flex items-center gap-2.5 flex-wrap">
+            <div className="mb-4 flex items-center gap-2.5 flex-wrap text-[20px]">
               {discountPrice ? (
                 <>
-                  <span className="text-xl font-extrabold text-brand-navy dark:text-[#f0ebe3]">
+                  <span className="text-xl font-semibold text-brand-navy dark:text-[#f0ebe3]">
                     ${discountPrice}
                   </span>
                   <span className="text-sm font-medium text-slate-400 line-through decoration-slate-400 dark:text-slate-500">
@@ -175,14 +167,15 @@ export default function ProductCard({ p }) {
                   </span>
                 </>
               ) : (
-                <span className="text-xl font-extrabold text-brand-navy dark:text-[#f0ebe3]">
+                <span className="text-xl font-semibold text-brand-navy dark:text-[#f0ebe3]">
                   ${basePrice}
                 </span>
               )}
             </div>
           </div> 
         </div>
-      </motion.div>
+        </motion.div>
+      </Link>
     </section>
   );
 }

@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { ChevronRight, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGetData } from "../../components/helpers/useGetData";
+import { useApp } from "@/components/context/AppContext";
 import ShopSidebar from "@/components/shop/ShopSidebar";
 import ShopTopbar from "@/components/shop/ShopTopbar";
 import ShopProducts from "@/components/shop/ShopProducts";
-import { useApp } from "@/components/context/AppContext";
 
 export default function ShopPage() {
   const { shopFilters, setShopFilters } = useApp();

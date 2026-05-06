@@ -73,7 +73,7 @@ export default function WishlistPage() {
               </Link>
             </motion.div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
               {wishlistItems.map((item, i) => {
                 const p = item.product || item;
                 const defaultVariant = p?.variants?.[0] || p;
@@ -86,13 +86,15 @@ export default function WishlistPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className="flex bg-white dark:bg-[#0a0f2e] rounded overflow-hidden border border-gray-100 hover:shadow hover:-translate-y-1 transition-all duration-300 h-full dark:border-[#1c2444]"
+                    className="flex bg-white dark:bg-[#0a0f2e] rounded overflow-hidden border border-gray-100 h-full dark:border-[#1c2444] group"
                   >
-                    <div className="w-1/3">
-                      <img
+                    <div className="w-1/3 overflow-hidden">
+                      <Image
                         src={p?.thumbnail_image || p?.image}
                         alt={p?.name || p?.variant_name}
-                        className="h-full transition-transform duration-500 group-hover:scale-105 rounded-l object-cover w-full"
+                        className="h-full transition-transform duration-500 group-hover:scale-105 rounded-l object-cover w-full group-hover:scale-105 transition-all duration-300"
+                        width={200}
+                        height={200}
                       />
                     </div>
 
@@ -103,7 +105,11 @@ export default function WishlistPage() {
                           className="hover:text-brand-gold transition-colors"
                         >
                           <h3 className="text-slate-900 font-semibold dark:text-[#e8d9c4] text-[15px] leading-snug line-clamp-2">
-                            {p?.name} ({p?.variant})
+                            {p?.name} 
+                            {" "}
+                            {
+                              p?.variant && (`(${p?.variant})`)
+                            }
                           </h3>
                         </Link>
                         <div className="mt-2 flex items-center gap-2">

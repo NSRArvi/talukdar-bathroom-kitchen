@@ -39,16 +39,6 @@ export default function ShopProducts({
         )
       ) : (
         <>
-          <div className="flex flex-wrap items-center justify-between text-sm font-medium text-slate-600 dark:text-[#9fa8cc]">
-            {meta && meta.total > 0 ? (
-              <p>
-                Showing {meta.from}–{meta.to} of {meta.total} products
-              </p>
-            ) : (
-              <p>Showing 0 products</p>
-            )}
-          </div>
-
           {currentProducts.length === 0 ? (
             <div className="flex flex-col items-center justify-center space-y-4 rounded-xl border border-dashed border-gray-300 bg-white px-4 py-16 text-center text-sm text-slate-600 dark:border-[#2a3460] dark:bg-[#0a0f2e] dark:text-[#9fa8cc]">
               <p className="text-lg font-semibold text-slate-700 dark:text-brand-pale">

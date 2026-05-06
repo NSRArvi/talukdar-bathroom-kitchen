@@ -34,9 +34,9 @@ export default function SearchModal({ isOpen, onClose }) {
     // Set new timer for debounce (500ms)
     debounceTimer.current = setTimeout(async () => {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_API_URL || "https://api-talukdar.fahimsultan.com/api";
+        const baseUrl = process.env.NEXT_PUBLIC_TALUKDAR_API_BASE_URL;
         const response = await fetch(
-          `${baseUrl}/products?search=${encodeURIComponent(query)}&rows=10`,
+          `${baseUrl}products?search=${encodeURIComponent(query)}&rows=10`,
           {
             method: "GET",
             headers: {
@@ -156,9 +156,9 @@ export default function SearchModal({ isOpen, onClose }) {
                       >
                         {/* Product Image */}
                         <div className="relative w-16 h-16 flex-shrink-0 rounded-lg bg-gray-100 dark:bg-[#1c2444] overflow-hidden">
-                          {product.image ? (
+                          {product.thumbnail_image ? (
                             <Image
-                              src={`https://api-talukdar.fahimsultan.com/storage/${product.image}`}
+                              src={product.thumbnail_image}
                               alt={product.name}
                               fill
                               className="object-cover"
@@ -176,14 +176,30 @@ export default function SearchModal({ isOpen, onClose }) {
                           <h3 className={`font-semibold truncate ${isDark ? "text-brand-pale" : "text-brand-navy"}`}>
                             {product.name}
                           </h3>
-                          <p className={`text-sm truncate ${isDark ? "text-gray-500" : "text-gray-600"}`}>
-                            {product.category?.name || "Uncategorized"}
-                          </p>
-                          {product.price && (
-                            <p className="text-brand-gold font-semibold text-sm mt-1">
-                              ${product.price}
-                            </p>
-                          )}
+                          
+                          {/* Price */}
+                          <div className="flex items-center gap-2 mt-1 flex-wrap text-sm">
+                            {(() => {
+                              const variant = product.variants?.[0];
+                              const discountPrice = variant?.discount?.discount_price;
+                              const basePrice = variant?.price || product.base_price || product.price;
+
+                              return discountPrice ? (
+                                <>
+                                  <span className="font-semibold text-brand-navy dark:text-[#f0ebe3]">
+                                    ${discountPrice}
+                                  </span>
+                                  <span className="text-xs font-medium text-slate-400 line-through decoration-slate-400 dark:text-slate-500">
+                                    ${basePrice}
+                                  </span>
+                                </>
+                              ) : (
+                                <span className="font-semibold text-brand-navy dark:text-[#f0ebe3]">
+                                  ${basePrice}
+                                </span>
+                              );
+                            })()}
+                          </div>
                         </div>
                       </Link>
                     ))}
