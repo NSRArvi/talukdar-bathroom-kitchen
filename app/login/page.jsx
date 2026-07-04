@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, KeyRound, Mail } from "lucide-react";
+import { ArrowRight, KeyRound, Mail, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useApp } from "@/components/context/AppContext";
 import { usePostData } from "@/components/helpers/usePostData";
@@ -145,10 +145,19 @@ function LoginContent() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full inline-flex items-center justify-center gap-2 rounded bg-brand-navy py-3.5 font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-gold disabled:opacity-70"
+                className="w-full inline-flex items-center justify-center gap-2 rounded bg-brand-navy py-3.5 font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-gold disabled:opacity-70 disabled:hover:translate-y-0"
               >
-                Send OTP
-                <ArrowRight size={16} />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Sending OTP...
+                  </>
+                ) : (
+                  <>
+                    Send OTP
+                    <ArrowRight size={16} />
+                  </>
+                )}
               </button>
             </form>
           ) : (
@@ -178,10 +187,19 @@ function LoginContent() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full inline-flex items-center justify-center gap-2 rounded bg-brand-navy py-3.5 font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-gold disabled:opacity-70"
+                className="w-full inline-flex items-center justify-center gap-2 rounded bg-brand-navy py-3.5 font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-gold disabled:opacity-70 disabled:hover:translate-y-0"
               >
-                Verify & Login
-                <ArrowRight size={16} />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Verifying...
+                  </>
+                ) : (
+                  <>
+                    Verify & Login
+                    <ArrowRight size={16} />
+                  </>
+                )}
               </button>
 
               <button

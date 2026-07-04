@@ -11,12 +11,13 @@ export default function NavCategory() {
   const [activeCategory, setActiveCategory] = useState(null);
 
   const currentActiveId = activeCategory || categories?.[0]?.id;
-  const activeCategoryData = categories?.find((cat) => cat.id === currentActiveId) || categories?.[0];
+  const activeCategoryData =
+    categories?.find((cat) => cat.id === currentActiveId) || categories?.[0];
 
   const getImageUrl = (path) => {
     if (!path) return "/placeholder-image.jpg"; // Handle null/undefined
     if (path.startsWith("http") || path.startsWith("data:")) return path;
-    return `https://api-talukdar.fahimsultan.com/storage/${path.replace(/^\//, '')}`;
+    return `https://api.smartkitchenandbath.com.au/storage/${path.replace(/^\//, "")}`;
   };
 
   return (
@@ -31,45 +32,46 @@ export default function NavCategory() {
         {categories?.map((cat) => {
           const isActive = currentActiveId === cat.id;
           return (
-          <Link
-            key={cat.id}
-            href={`/shop/${cat.slug}`}
-            passHref
-            legacyBehavior
-          >
-            <motion.a
-              onMouseEnter={() => setActiveCategory(cat.id)}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`flex items-center gap-2 px-3 py-2 relative transition-colors duration-200 text-sm font-medium whitespace-nowrap cursor-pointer ${
-                isActive
-                  ? "text-[#050a30] dark:text-[#f0ebe3]"
-                  : "text-[#050a30]/60 dark:text-[#f0ebe3]/60"
-              }`}
-              whileHover={{ x: 4 }}
-              whileTap={{ scale: 0.98 }}
+            <Link
+              key={cat.id}
+              href={`/shop/${cat.slug}`}
+              passHref
+              legacyBehavior
             >
-              <Image
-                src={getImageUrl(cat.icon)}
-                alt={cat.name}
-                width={40}
-                height={40}
-                className="rounded flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
-              />
-              <span>{cat.name}</span>
-
-              {/* Active indicator */}
-              {isActive && (
-                <motion.div
-                  layoutId="category-indicator"
-                  className="absolute left-0 top-0 bottom-0 w-1 bg-[#785d32]"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+              <motion.a
+                onMouseEnter={() => setActiveCategory(cat.id)}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`flex items-center gap-2 px-3 py-2 relative transition-colors duration-200 text-sm font-medium whitespace-nowrap cursor-pointer ${
+                  isActive
+                    ? "text-[#050a30] dark:text-[#f0ebe3]"
+                    : "text-[#050a30]/60 dark:text-[#f0ebe3]/60"
+                }`}
+                whileHover={{ x: 4 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Image
+                  src={getImageUrl(cat.icon)}
+                  alt={cat.name}
+                  width={40}
+                  height={40}
+                  className="rounded flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
                 />
-              )}
-            </motion.a>
-          </Link>
-        )})}
+                <span>{cat.name}</span>
+
+                {/* Active indicator */}
+                {isActive && (
+                  <motion.div
+                    layoutId="category-indicator"
+                    className="absolute left-0 top-0 bottom-0 w-1 bg-[#785d32]"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  />
+                )}
+              </motion.a>
+            </Link>
+          );
+        })}
       </motion.div>
 
       {/* Divider */}
@@ -108,7 +110,7 @@ export default function NavCategory() {
                       alt={subcat.name}
                       fill
                       className="object-cover group-hover/item:scale-110 transition-transform duration-300"
-                      onError={(e) => { 
+                      onError={(e) => {
                         if (e.currentTarget.src !== "/placeholder-image.jpg") {
                           e.currentTarget.src = "/placeholder-image.jpg";
                           e.currentTarget.srcset = "";
@@ -116,7 +118,9 @@ export default function NavCategory() {
                       }}
                     />
                   </div>
-                  <p className="text-sm mt-3 text-[#050a30] dark:text-[#f0ebe3]/80 group-hover/item:text-[#050a30] dark:group-hover/item:text-[#f0ebe3] transition-colors duration-300">{subcat.name}</p>
+                  <p className="text-sm mt-3 text-[#050a30] dark:text-[#f0ebe3]/80 group-hover/item:text-[#050a30] dark:group-hover/item:text-[#f0ebe3] transition-colors duration-300">
+                    {subcat.name}
+                  </p>
                 </Link>
               ))}
             </div>

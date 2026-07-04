@@ -1,20 +1,3 @@
-// const nextConfig = {
-//   productionBrowserSourceMaps: false,
-//   images: {
-//     remotePatterns: [
-//       {
-//         protocol: "https",
-//         // hostname: 'images.unsplash.com',
-//         hostname: "api-talukdar.fahimsultan.com",
-//         port: "",
-//         pathname: "/**",
-//       },
-//     ],
-//   },
-// };
-
-// export default nextConfig;
-
 const nextConfig = {
   productionBrowserSourceMaps: false,
   images: {
@@ -26,7 +9,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "api-talukdar.fahimsultan.com",
+        hostname: "api.smartkitchenandbath.com.au",
         pathname: "/**",
       },
     ],
