@@ -124,7 +124,7 @@ export default function ProductCard({ p }) {
                     e.stopPropagation();
                     setSelectedVariant(variant);
                   }}
-                  className={`relative cursor-pointer overflow-hidden ring-2 transition-all ${
+                  className={`relative cursor-pointer overflow-hidden flex-shrink-0 h-[50px] w-[50px] ring-2 transition-all ${
                     selectedVariant?.product_variant_id === variant?.product_variant_id
                       ? "ring-brand-gold"
                       : "ring-transparent hover:ring-brand-gold/50"
@@ -133,8 +133,7 @@ export default function ProductCard({ p }) {
                   <Image
                     src={variant?.image}
                     alt={variant?.variant_name || "Variant"}
-                    height={50}
-                    width={50}
+                    fill
                     className="object-cover"
                   />
                 </motion.button>

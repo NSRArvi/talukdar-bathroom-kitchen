@@ -30,7 +30,7 @@
     "yet-another-react-lightbox": "^3.30.1"
   },
   "devDependencies": {
-    "@next/swc-darwin-arm64": "16.1.6",
+    
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

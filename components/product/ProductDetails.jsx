@@ -29,25 +29,32 @@ function HtmlBlock({ title, html }) {
 
 export default function ProductDetails({ product }) {
   const router = useRouter();
-  const { addToCartDBGuest, wishlistItems, addToWishlist, removeFromWishlist } = useApp();
+  const { addToCartDBGuest, wishlistItems, addToWishlist, removeFromWishlist } =
+    useApp();
   const variants = Array.isArray(product?.variants) ? product.variants : [];
   const defaultVariant = variants[0] || null;
   const gallery = Array.isArray(product?.main_image) ? product.main_image : [];
-  const relatedProducts = Array.isArray(product?.related_products) ? product.related_products : [];
-  console.log(product);
+  const relatedProducts = Array.isArray(product?.related_products)
+    ? product.related_products
+    : [];
+  console.log(relatedProducts);
 
   const [selectedVariantId, setSelectedVariantId] = useState(
     defaultVariant?.product_variant_id || null,
   );
 
   const selectedVariant =
-    variants.find((v) => String(v.product_variant_id) === String(selectedVariantId)) ||
-    defaultVariant;
+    variants.find(
+      (v) => String(v.product_variant_id) === String(selectedVariantId),
+    ) || defaultVariant;
 
   const wishlistItem = wishlistItems?.find(
-    (w) => String(w?.product_variant_id) === String(selectedVariant?.product_variant_id) || String(w?.id) === String(selectedVariant?.product_variant_id)
+    (w) =>
+      String(w?.product_variant_id) ===
+        String(selectedVariant?.product_variant_id) ||
+      String(w?.id) === String(selectedVariant?.product_variant_id),
   );
-  
+
   const wishlistOn = Boolean(wishlistItem) || Boolean(product?.is_wishlisted);
 
   const [activeImage, setActiveImage] = useState(null);
@@ -107,9 +114,15 @@ export default function ProductDetails({ product }) {
 
   function handleWishlist() {
     if (wishlistOn) {
-      removeFromWishlist(wishlistItem?.id || selectedVariant?.product_variant_id || product?.product_variant_id);
+      removeFromWishlist(
+        wishlistItem?.id ||
+          selectedVariant?.product_variant_id ||
+          product?.product_variant_id,
+      );
     } else {
-      addToWishlist(selectedVariant?.product_variant_id || product?.product_variant_id);
+      addToWishlist(
+        selectedVariant?.product_variant_id || product?.product_variant_id,
+      );
     }
   }
 

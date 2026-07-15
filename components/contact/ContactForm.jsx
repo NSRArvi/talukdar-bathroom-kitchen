@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Loader2 } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 const BASE_URL = process.env.NEXT_PUBLIC_TALUKDAR_API_BASE_URL;
 
 const INITIAL_FORM = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  projectType: '',
-  message: '',
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  projectType: "",
+  message: "",
 };
 
 export default function ContactForm() {
@@ -25,7 +25,7 @@ export default function ContactForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
     // Clear error for this field when user starts typing
     if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   }
 
@@ -34,24 +34,24 @@ export default function ContactForm() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!formData.firstName.trim()) {
-      errs.firstName = 'First name is required';
+      errs.firstName = "First name is required";
     }
     if (!formData.lastName.trim()) {
-      errs.lastName = 'Last name is required';
+      errs.lastName = "Last name is required";
     }
     if (!formData.email.trim()) {
-      errs.email = 'Email is required';
+      errs.email = "Email is required";
     } else if (!emailRegex.test(formData.email)) {
-      errs.email = 'Please enter a valid email';
+      errs.email = "Please enter a valid email";
     }
     if (!formData.phone.trim()) {
-      errs.phone = 'Phone is required';
+      errs.phone = "Phone is required";
     }
     if (!formData.projectType.trim()) {
-      errs.projectType = 'Please select a project type';
+      errs.projectType = "Please select a project type";
     }
     if (!formData.message.trim()) {
-      errs.message = 'Message is required';
+      errs.message = "Message is required";
     }
 
     return errs;
@@ -71,21 +71,25 @@ export default function ContactForm() {
 
     try {
       if (!BASE_URL) {
-        throw new Error('Missing NEXT_PUBLIC_TALUKDAR_API_BASE_URL environment variable.');
+        throw new Error(
+          "Missing NEXT_PUBLIC_TALUKDAR_API_BASE_URL environment variable.",
+        );
       }
 
-      const normalizedBaseUrl = BASE_URL.endsWith('/') ? BASE_URL : `${BASE_URL}/`;
+      const normalizedBaseUrl = BASE_URL.endsWith("/")
+        ? BASE_URL
+        : `${BASE_URL}/`;
 
       const payload = new FormData();
-      payload.append('first_name', formData.firstName.trim());
-      payload.append('last_name', formData.lastName.trim());
-      payload.append('phone', formData.phone.trim());
-      payload.append('email', formData.email.trim());
-      payload.append('project_type', formData.projectType.trim());
-      payload.append('message', formData.message.trim());
+      payload.append("first_name", formData.firstName.trim());
+      payload.append("last_name", formData.lastName.trim());
+      payload.append("phone", formData.phone.trim());
+      payload.append("email", formData.email.trim());
+      payload.append("project_type", formData.projectType.trim());
+      payload.append("message", formData.message.trim());
 
       const res = await fetch(`${normalizedBaseUrl}contact-us`, {
-        method: 'POST',
+        method: "POST",
         body: payload,
       });
 
@@ -95,10 +99,10 @@ export default function ContactForm() {
       }
 
       await res.json();
-      toast.success('Message sent successfully! We will contact you soon.');
+      toast.success("Message sent successfully! We will contact you soon.");
       setFormData(INITIAL_FORM);
     } catch (err) {
-      toast.error(err.message ?? 'Something went wrong. Please try again.');
+      toast.error(err.message ?? "Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -108,7 +112,7 @@ export default function ContactForm() {
     <div className="bg-[#f7f5f2] dark:bg-[#162235] rounded p-6 sm:p-8 md:p-10 border border-[#e8dcc9] dark:border-[#26344f]">
       <h2
         className="text-3xl md:text-4xl font-bold text-brand-navy dark:text-[#f0ebe3]"
-        style={{ fontFamily: 'var(--font-playfair)' }}
+        style={{ fontFamily: "var(--font-playfair)" }}
       >
         Send Us a Message
       </h2>
@@ -119,7 +123,10 @@ export default function ContactForm() {
       <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="firstName" className="block text-sm font-semibold text-brand-navy dark:text-[#f0ebe3] mb-2">
+            <label
+              htmlFor="firstName"
+              className="block text-sm font-semibold text-brand-navy dark:text-[#f0ebe3] mb-2"
+            >
               First Name
             </label>
             <input
@@ -130,15 +137,20 @@ export default function ContactForm() {
               onChange={handleChange}
               className={`w-full rounded border ${
                 errors.firstName
-                  ? 'border-red-400 focus:ring-red-400/50'
-                  : 'border-[#d7cab7] dark:border-[#2d3d5b] focus:ring-brand-gold/50'
+                  ? "border-red-400 focus:ring-red-400/50"
+                  : "border-[#d7cab7] dark:border-[#2d3d5b] focus:ring-brand-gold/50"
               } bg-white dark:bg-[#0f1219] px-4 py-3 text-brand-navy dark:text-[#f0ebe3] outline-none focus:ring-2 transition-colors`}
               placeholder="John"
             />
-            {errors.firstName && <p className="text-xs text-red-500 mt-1">{errors.firstName}</p>}
+            {errors.firstName && (
+              <p className="text-xs text-red-500 mt-1">{errors.firstName}</p>
+            )}
           </div>
           <div>
-            <label htmlFor="lastName" className="block text-sm font-semibold text-brand-navy dark:text-[#f0ebe3] mb-2">
+            <label
+              htmlFor="lastName"
+              className="block text-sm font-semibold text-brand-navy dark:text-[#f0ebe3] mb-2"
+            >
               Last Name
             </label>
             <input
@@ -149,18 +161,23 @@ export default function ContactForm() {
               onChange={handleChange}
               className={`w-full rounded border ${
                 errors.lastName
-                  ? 'border-red-400 focus:ring-red-400/50'
-                  : 'border-[#d7cab7] dark:border-[#2d3d5b] focus:ring-brand-gold/50'
+                  ? "border-red-400 focus:ring-red-400/50"
+                  : "border-[#d7cab7] dark:border-[#2d3d5b] focus:ring-brand-gold/50"
               } bg-white dark:bg-[#0f1219] px-4 py-3 text-brand-navy dark:text-[#f0ebe3] outline-none focus:ring-2 transition-colors`}
               placeholder="Doe"
             />
-            {errors.lastName && <p className="text-xs text-red-500 mt-1">{errors.lastName}</p>}
+            {errors.lastName && (
+              <p className="text-xs text-red-500 mt-1">{errors.lastName}</p>
+            )}
           </div>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-semibold text-brand-navy dark:text-[#f0ebe3] mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-semibold text-brand-navy dark:text-[#f0ebe3] mb-2"
+            >
               Email
             </label>
             <input
@@ -171,15 +188,20 @@ export default function ContactForm() {
               onChange={handleChange}
               className={`w-full rounded border ${
                 errors.email
-                  ? 'border-red-400 focus:ring-red-400/50'
-                  : 'border-[#d7cab7] dark:border-[#2d3d5b] focus:ring-brand-gold/50'
+                  ? "border-red-400 focus:ring-red-400/50"
+                  : "border-[#d7cab7] dark:border-[#2d3d5b] focus:ring-brand-gold/50"
               } bg-white dark:bg-[#0f1219] px-4 py-3 text-brand-navy dark:text-[#f0ebe3] outline-none focus:ring-2 transition-colors`}
               placeholder="you@example.com"
             />
-            {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-xs text-red-500 mt-1">{errors.email}</p>
+            )}
           </div>
           <div>
-            <label htmlFor="phone" className="block text-sm font-semibold text-brand-navy dark:text-[#f0ebe3] mb-2">
+            <label
+              htmlFor="phone"
+              className="block text-sm font-semibold text-brand-navy dark:text-[#f0ebe3] mb-2"
+            >
               Phone
             </label>
             <input
@@ -190,16 +212,18 @@ export default function ContactForm() {
               onChange={handleChange}
               className={`w-full rounded border ${
                 errors.phone
-                  ? 'border-red-400 focus:ring-red-400/50'
-                  : 'border-[#d7cab7] dark:border-[#2d3d5b] focus:ring-brand-gold/50'
+                  ? "border-red-400 focus:ring-red-400/50"
+                  : "border-[#d7cab7] dark:border-[#2d3d5b] focus:ring-brand-gold/50"
               } bg-white dark:bg-[#0f1219] px-4 py-3 text-brand-navy dark:text-[#f0ebe3] outline-none focus:ring-2 transition-colors`}
               placeholder="+1 (555) 123-4567"
             />
-            {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
+            {errors.phone && (
+              <p className="text-xs text-red-500 mt-1">{errors.phone}</p>
+            )}
           </div>
         </div>
 
-        <div>
+        {/* <div>
           <label htmlFor="projectType" className="block text-sm font-semibold text-brand-navy dark:text-[#f0ebe3] mb-2">
             Project Type
           </label>
@@ -223,10 +247,13 @@ export default function ContactForm() {
             <option value="showroom">Showroom Visit</option>
           </select>
           {errors.projectType && <p className="text-xs text-red-500 mt-1">{errors.projectType}</p>}
-        </div>
+        </div> */}
 
         <div>
-          <label htmlFor="message" className="block text-sm font-semibold text-brand-navy dark:text-[#f0ebe3] mb-2">
+          <label
+            htmlFor="message"
+            className="block text-sm font-semibold text-brand-navy dark:text-[#f0ebe3] mb-2"
+          >
             Message
           </label>
           <textarea
@@ -237,12 +264,14 @@ export default function ContactForm() {
             onChange={handleChange}
             className={`w-full rounded border ${
               errors.message
-                ? 'border-red-400 focus:ring-red-400/50'
-                : 'border-[#d7cab7] dark:border-[#2d3d5b] focus:ring-brand-gold/50'
+                ? "border-red-400 focus:ring-red-400/50"
+                : "border-[#d7cab7] dark:border-[#2d3d5b] focus:ring-brand-gold/50"
             } bg-white dark:bg-[#0f1219] px-4 py-3 text-brand-navy dark:text-[#f0ebe3] outline-none focus:ring-2 transition-colors`}
             placeholder="Tell us about your space, style, and budget goals."
           />
-          {errors.message && <p className="text-xs text-red-500 mt-1">{errors.message}</p>}
+          {errors.message && (
+            <p className="text-xs text-red-500 mt-1">{errors.message}</p>
+          )}
         </div>
 
         <button
@@ -256,7 +285,7 @@ export default function ContactForm() {
               Sending...
             </>
           ) : (
-            'Submit Request'
+            "Submit Request"
           )}
         </button>
       </form>

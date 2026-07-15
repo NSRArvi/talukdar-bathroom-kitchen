@@ -7,6 +7,7 @@ import Preloader from "@/components/shared/Preloader";
 import "./globals.css";
 import ReactQueryProvider from "../components/providers/QueryProvider";
 import ScrollToTop from "../components/scrollToTop/ScrollToTop";
+import ChatModal from "../components/shared/ChatModal";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -30,7 +31,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${playfair.variable} ${openSans.variable} antialiased bg-white dark:bg-[#060b20] transition-colors duration-300`}
+        className={`${playfair.variable} ${openSans.variable} antialiased bg-white dark:bg-[#060b20] transition-colors duration-300 relative`}
       >
         <ReactQueryProvider>
           <AppProvider>
@@ -39,6 +40,7 @@ export default function RootLayout({ children }) {
             <Navbar />
             {children}
             <Footer />
+            <ChatModal />
             <CartSidebar />
           </AppProvider>
         </ReactQueryProvider>
